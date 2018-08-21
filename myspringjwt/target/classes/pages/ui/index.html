@@ -1,0 +1,55 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="header :: copy"></head>
+
+<body>
+
+	<h1>Index  Demo V2.1</h1>
+	<h3>User LoggedIn</h3>
+	<ul>
+		<li>Demo running with profile: <i th:text="${profiles}">profiles</i>
+			<br />To change the profile, edit <code>Main.java</code>
+		</li>
+		
+		<li>Demo uses the <a href="http://thymeleaf.org">Thymeleaf</a>
+			view generation system to generate HTML pages (a nice alternative to
+			JSP that cn be configured by Spring Boot automatically).
+		</li>
+	</ul>
+	<p>
+		Spring-Boot sets up <i>error</i> view as the default error-page and we
+		are using Thymeleaf to define it via the <i>error.html</i> template
+		(if you don't configure your own error view you see the so-called
+		"Whitelabel Error Page").
+	</p>
+	<p>
+		Without Spring Boot you would see your container's default error page.
+		Rename <i>error.html</i> to <i>error2.html</i> and restart to see this
+		for yourself.
+	</p>
+
+	<p>The previous version of this demo tried to show everything on
+		one page. It has been broken down into different pages for clarity.</p>
+
+	<h3>The Demo</h3>
+
+		<h3>Spring Boot URLs</h3>
+	<p>For those interested, Spring Boot provides RESTful URLs for
+		interrogating your application (they return JSON format data):</p>
+
+	<ul>
+		<li><a th:href="@{/user/getAllUsers}">The Users</a></li>
+		<li><a th:href="@{/env}">The environment</a></li>
+		<li><a th:href="@{/dump}">Thread dump</a></li>
+		<li><a th:href="@{/health}">Application health</a></li>
+		<li><a th:href="@{/info}">Application information</a></li>
+		<li><a th:href="@{/metrics}">Application metrics</a></li>
+		<li><a th:href="@{/trace}">Request call trace</a></li>
+	</ul>
+
+	<div th:replace="footer :: copy"></div>
+
+</body>
+</html>
