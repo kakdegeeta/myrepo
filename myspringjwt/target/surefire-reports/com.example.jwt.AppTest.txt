@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.example.jwt.AppTest
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.091 s - in com.example.jwt.AppTest

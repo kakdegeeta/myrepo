@@ -1,6 +1,0 @@
-com\example\jwt\security\JwtAuthenticationProvider.class
-com\example\jwt\security\JwtAuthenticationFilter.class
-com\example\jwt\security\JwtTokenUtil.class
-com\example\jwt\App.class
-com\example\jwt\security\SSOSecurityConfig$RestAuthenticationEntryPoint.class
-com\example\jwt\security\SSOSecurityConfig.class
