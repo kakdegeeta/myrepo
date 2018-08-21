@@ -3,6 +3,8 @@ package com.example.jwt.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +26,11 @@ public class APIController {
 	@Autowired 
 	JwtTokenUtil jwtTokenUtil;
     
+	private static Logger log = LoggerFactory.getLogger(APIController.class);
+	
 	@GetMapping("sso/createtoken")
     public String createToken(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("In createToken");
+		log.info("In createToken");
 
 		return jwtTokenUtil.createToken("traderId");
 		
@@ -35,28 +39,28 @@ public class APIController {
 
 	@GetMapping("sso/verifytoken")
     public boolean verifyToken(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("In verifyToken");
+		log.info("In verifyToken");
 		String token=request.getParameter("token");
 		
 		if (token != null) {
 			return jwtTokenUtil.verifyToken(token);
         }
-		System.out.println("Token Not Found In Request");
+		log.info("Token Not Found In Request");
         return false;
     }
 	
 	
 	@GetMapping("cfd/updatebalance")
     public boolean cfdUpdateBalance(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("cfd/updatebalance");
+		log.info("cfd/updatebalance");
 		return true;
     }
 	
 	@GetMapping("wallet/updatebalance")
     public boolean walletUpdateBalance(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("wallet/updatebalance");
+		log.info("wallet/updatebalance");
 		throw new RuntimeException();
 		
-		//return true;
+	
     }
 }
