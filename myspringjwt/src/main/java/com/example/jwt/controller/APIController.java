@@ -31,7 +31,7 @@ public class APIController {
 	@GetMapping("sso/createtoken")
     public String createToken(HttpServletRequest request, HttpServletResponse response) {
 		log.info("In createToken");
-
+		log.info("Additional Info statement");
 		return jwtTokenUtil.createToken("traderId");
 		
     }
