@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ControllerWithoutExceptionHandlers.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">myspringjwt</a> &gt; <a href="index.source.html" class="el_package">com.example.jwt.controller</a> &gt; <span class="el_source">ControllerWithoutExceptionHandlers.java</span></div><h1>ControllerWithoutExceptionHandlers.java</h1><pre class="source lang-java linenums">package com.example.jwt.controller;
+
+import java.sql.SQLException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.jwt.exception.GlobalExceptionHandlingControllerAdvice;
+
+/**
+ * A controller whose request-handler methods deliberately throw exceptions to
+ * demonstrate the points discussed in the Blog.
+ * &lt;p&gt;
+ * Expects a &lt;tt&gt;@ControllerAdvice&lt;/tt&gt; to handle its exceptions - see
+ * {@link GlobalExceptionHandlingControllerAdvice}.
+ * 
+ * @author Paul Chapman
+ */
+@Controller
+@RequestMapping(&quot;/global&quot;)
+public class ControllerWithoutExceptionHandlers {
+
+	protected Logger logger;
+
+<span class="nc" id="L28">	public ControllerWithoutExceptionHandlers() {</span>
+<span class="nc" id="L29">		logger = LoggerFactory.getLogger(getClass());</span>
+<span class="nc" id="L30">	}</span>
+
+	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+	/* . . . . . . . . . . . . . . REQUEST HANDLERS . . . . . . . . . . . . . . */
+	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+	/**
+	 * Controller to demonstrate exception handling.
+	 * 
+	 * @return The view name (an HTML page with Thymeleaf markup).
+	 */
+	@RequestMapping(&quot;&quot;)
+	String home1() {
+<span class="nc" id="L43">		logger.info(&quot;Global home page 1&quot;);</span>
+<span class="nc" id="L44">		return &quot;global&quot;;</span>
+	}
+
+	/**
+	 * Controller to demonstrate exception handling..
+	 * 
+	 * @return The view name (an HTML page with Thymeleaf markup).
+	 */
+	@RequestMapping(&quot;/&quot;)
+	String home2() {
+<span class="nc" id="L54">		logger.info(&quot;Global home page 2&quot;);</span>
+<span class="nc" id="L55">		return &quot;global&quot;;</span>
+	}
+
+	
+	/**
+	 * Throws an unannotated &lt;tt&gt;DataIntegrityViolationException&lt;/tt&gt;. Must be
+	 * caught by an exception handler.
+	 * 
+	 * @return Nothing - it always throws the exception.
+	 * @throws DataIntegrityViolationException
+	 *             Always thrown.
+	 */
+	@RequestMapping(&quot;/dataIntegrityViolation&quot;)
+	String throwDataIntegrityViolationException() throws SQLException {
+<span class="nc" id="L69">		logger.info(&quot;Throw DataIntegrityViolationException&quot;);</span>
+<span class="nc" id="L70">		throw new DataIntegrityViolationException(&quot;Duplicate id&quot;);</span>
+	}
+
+	/**
+	 * Simulates a database exception by always throwing &lt;tt&gt;SQLException&lt;/tt&gt;.
+	 * Must be caught by an exception handler.
+	 * 
+	 * @return Nothing - it always throws the exception.
+	 * @throws SQLException
+	 *             Always thrown.
+	 */
+	@RequestMapping(&quot;/databaseError1&quot;)
+	String throwDatabaseException1() throws SQLException {
+<span class="nc" id="L83">		logger.info(&quot;Throw SQLException&quot;);</span>
+<span class="nc" id="L84">		throw new SQLException();</span>
+	}
+
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
