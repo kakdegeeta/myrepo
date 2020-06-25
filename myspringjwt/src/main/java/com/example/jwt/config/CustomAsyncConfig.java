@@ -27,6 +27,9 @@ public class CustomAsyncConfig implements AsyncConfigurer{
 	@Bean(destroyMethod="shutdown")
     public Executor getAsyncExecutor() {
 
+	/**
+		Configure ThreadPoolTaskExecutor
+	**/
 		ThreadPoolTaskExecutor executor=new ThreadPoolTaskExecutor();
 		executor.setCorePoolSize(5);
         executor.setMaxPoolSize(10);
