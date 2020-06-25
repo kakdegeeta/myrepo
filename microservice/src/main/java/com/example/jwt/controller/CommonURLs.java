@@ -17,5 +17,4 @@ public class CommonURLs {
 	public static final String MICROSERVICE_URL="/micro";
 	public static final String MASTER_URL="/master";
 
-
 }
