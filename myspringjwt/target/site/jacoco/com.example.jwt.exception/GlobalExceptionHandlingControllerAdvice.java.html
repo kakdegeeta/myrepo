@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GlobalExceptionHandlingControllerAdvice.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">myspringjwt</a> &gt; <a href="index.source.html" class="el_package">com.example.jwt.exception</a> &gt; <span class="el_source">GlobalExceptionHandlingControllerAdvice.java</span></div><h1>GlobalExceptionHandlingControllerAdvice.java</h1><pre class="source lang-java linenums">package com.example.jwt.exception;
+
+import java.sql.SQLException;
+import java.util.Date;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
+
+/**
+ * Copyright (c) 2018 NTT DATA Corporation
+ *
+ * @author 159719
+ * 10 Aug 2018
+ *
+ */
+@ControllerAdvice
+public class GlobalExceptionHandlingControllerAdvice {
+	
+	protected Logger logger;
+	
+<span class="nc" id="L33">	public GlobalExceptionHandlingControllerAdvice() {</span>
+<span class="nc" id="L34">		logger = LoggerFactory.getLogger(getClass());</span>
+<span class="nc" id="L35">	}</span>
+
+	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+	/* . . . . . . . . . . . . . EXCEPTION HANDLERS . . . . . . . . . . . . . . */
+	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+	/**
+	 * Convert a predefined exception to an HTTP Status code
+	 */
+	@ResponseStatus(value = HttpStatus.CONFLICT, reason = &quot;Data integrity violation&quot;)
+	// 409
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public void conflict() {
+<span class="nc" id="L48">		logger.error(&quot;Request raised a DataIntegrityViolationException&quot;);</span>
+		// Nothing to do
+<span class="nc" id="L50">	}</span>
+
+	/**
+	 * Convert a predefined exception to an HTTP Status code and specify the
+	 * name of a specific view that will be used to display the error.
+	 * 
+	 * @return Exception view.
+	 */
+	@ExceptionHandler({ SQLException.class, DataAccessException.class })
+	public String databaseError(Exception exception) {
+		// Nothing to do. Return value 'databaseError' used as logical view name
+		// of an error page, passed to view-resolver(s) in usual way.
+<span class="nc" id="L62">		logger.error(&quot;Request raised &quot; + exception.getClass().getSimpleName());</span>
+<span class="nc" id="L63">		return &quot;databaseError&quot;;</span>
+	}
+
+	/**
+	 * Demonstrates how to take total control - setup a model, add useful
+	 * information and return the &quot;support&quot; view name. This method explicitly
+	 * creates and returns
+	 * 
+	 * @param req
+	 *            Current HTTP request.
+	 * @param exception
+	 *            The exception thrown - always {@link SupportInfoException}.
+	 * @return The model and view used by the DispatcherServlet to generate
+	 *         output.
+	 * @throws Exception
+	 */
+	@ExceptionHandler({Exception.class,RuntimeException.class,AuthenticationException.class})
+	public ModelAndView handleError(HttpServletRequest req, Exception exception)
+			throws Exception {
+<span class="nc" id="L82">		System.out.println(&quot;In GlobalExceptionHandlingControllerAdvice:handleError&quot;);</span>
+		
+		// Rethrow annotated exceptions or they will be processed here instead.
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (AnnotationUtils.findAnnotation(exception.getClass(),</span>
+				ResponseStatus.class) != null)
+<span class="nc" id="L87">			throw exception;</span>
+
+<span class="nc" id="L89">		logger.error(&quot;Request: &quot; + req.getRequestURI() + &quot; raised &quot; + exception);</span>
+		
+<span class="nc" id="L91">		ModelAndView mav = new ModelAndView();</span>
+<span class="nc" id="L92">		mav.addObject(&quot;exception&quot;, exception);</span>
+<span class="nc" id="L93">		mav.addObject(&quot;url&quot;, req.getRequestURL());</span>
+<span class="nc" id="L94">		mav.addObject(&quot;timestamp&quot;, new Date().toString());</span>
+		
+<span class="nc" id="L96">		Object status = req.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (status != null) {</span>
+<span class="nc" id="L98">			Integer statusCode = Integer.valueOf(status.toString());</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (statusCode == HttpStatus.NOT_FOUND.value()) {</span>
+<span class="nc" id="L100">				mav.setViewName(&quot;error-404&quot;);</span>
+<span class="nc" id="L101">				mav.addObject(&quot;status&quot;, 404);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">			} else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {</span>
+<span class="nc" id="L103">				mav.setViewName(&quot;systemerror&quot;);</span>
+<span class="nc" id="L104">				mav.addObject(&quot;status&quot;, 500);</span>
+			}
+			else
+			{
+
+<span class="nc" id="L109">				mav.addObject(&quot;status&quot;,statusCode);</span>
+<span class="nc" id="L110">				mav.setViewName(&quot;systemerror&quot;);</span>
+			}
+<span class="nc" id="L112">		}</span>
+		else 
+			{
+<span class="nc" id="L115">				mav.addObject(&quot;status&quot;, 500);</span>
+<span class="nc" id="L116">				mav.setViewName(&quot;systemerror&quot;);</span>
+			}
+<span class="nc" id="L118">		return mav;</span>
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
