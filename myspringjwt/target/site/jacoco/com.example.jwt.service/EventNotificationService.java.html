@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EventNotificationService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">myspringjwt</a> &gt; <a href="index.source.html" class="el_package">com.example.jwt.service</a> &gt; <span class="el_source">EventNotificationService.java</span></div><h1>EventNotificationService.java</h1><pre class="source lang-java linenums">package com.example.jwt.service;
+
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+
+/**
+ * Copyright (c) 2018 NTT DATA Corporation
+ *
+ * @author 159719
+ * 16 Aug 2018
+ *
+ */
+@Component
+<span class="nc" id="L14">public class EventNotificationService {</span>
+	
+	/**
+	 * @param string
+	 */
+	@Async
+	public void raiseEvent(String eventCode) throws InterruptedException {
+<span class="nc" id="L21">		System.out.println(&quot;Execute method asynchronously. &quot;</span>
+<span class="nc" id="L22">			      + Thread.currentThread().getName());</span>
+		
+		try {
+<span class="nc" id="L25">	        Thread.sleep(5000);</span>
+<span class="nc" id="L26">	        System.out.println(String.format(&quot;'%s' Event Execution Completed&quot;,eventCode));</span>
+	      
+<span class="nc" id="L28">	    } catch (InterruptedException e) {</span>
+	        
+<span class="nc" id="L30">	    	System.out.println(&quot;Thread Interrupted.. raise exception&quot;);</span>
+<span class="nc" id="L31">	       	throw e;</span>
+<span class="nc" id="L32">	    }</span>
+		
+<span class="nc" id="L34">	}</span>
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
