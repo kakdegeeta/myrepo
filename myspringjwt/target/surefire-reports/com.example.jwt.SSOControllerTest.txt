@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: com.example.jwt.SSOControllerTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.441 s <<< FAILURE! - in com.example.jwt.SSOControllerTest
+createTokenTest(com.example.jwt.SSOControllerTest)  Time elapsed: 0.016 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'testContext': Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.test.context.TestContext]: Specified class is an interface
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.test.context.TestContext]: Specified class is an interface
+

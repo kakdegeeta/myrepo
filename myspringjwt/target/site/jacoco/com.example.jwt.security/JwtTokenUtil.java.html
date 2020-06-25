@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JwtTokenUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">myspringjwt</a> &gt; <a href="index.source.html" class="el_package">com.example.jwt.security</a> &gt; <span class="el_source">JwtTokenUtil.java</span></div><h1>JwtTokenUtil.java</h1><pre class="source lang-java linenums">package com.example.jwt.security;
+
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
+
+/**
+ * Copyright (c) 2018 NTT DATA Corporation
+ *
+ * @author 159719 31 Jul 2018
+ *
+ */
+@Component
+<span class="nc" id="L19">public class JwtTokenUtil {</span>
+
+	@Value(&quot;${app.jwt.expirationtime}&quot;)
+	private long EXPIRATIONTIME ;
+	@Value(&quot;${app.jwt.secret}&quot;)
+	private String SECRET;	
+
+	
+	/**
+	 * @param eXPIRATIONTIME the eXPIRATIONTIME to set
+	 */
+	public void setEXPIRATIONTIME(long eXPIRATIONTIME) {
+<span class="nc" id="L31">		EXPIRATIONTIME = eXPIRATIONTIME;</span>
+<span class="nc" id="L32">	}</span>
+
+	/**
+	 * @param sECRET the sECRET to set
+	 */
+	public void setSECRET(String sECRET) {
+<span class="nc" id="L38">		SECRET = sECRET;</span>
+<span class="nc" id="L39">	}</span>
+	
+	/**
+	 * 
+	 * @param subject
+	 * @return
+	 */
+	public String createToken(String subject) {
+
+<span class="nc" id="L48">		String token = JWT.create().withSubject(subject)</span>
+<span class="nc" id="L49">				.withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATIONTIME))</span>
+<span class="nc" id="L50">				.sign(Algorithm.HMAC512(SECRET.getBytes()));</span>
+<span class="nc" id="L51">		return token;</span>
+
+	}
+
+	/**
+	 * 
+	 * @param subject
+	 * @return
+	 */
+	public boolean verifyToken(String token) {
+		try {
+			// parse the token.
+<span class="nc" id="L63">			String user = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build().verify(token).getSubject();</span>
+
+<span class="nc bnc" id="L65" title="All 2 branches missed.">			if (user != null) {</span>
+<span class="nc" id="L66">				System.out.println(&quot;Token Verified Successfully for :&quot; + user);</span>
+<span class="nc" id="L67">				return true;</span>
+			}
+<span class="nc" id="L69">		} catch (TokenExpiredException exp) {</span>
+<span class="nc" id="L70">			System.out.println(&quot;The Token has expired...&quot;);</span>
+<span class="nc" id="L71">			System.out.println(exp.getMessage());</span>
+<span class="nc" id="L72">		}</span>
+
+<span class="nc" id="L74">		return false;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
