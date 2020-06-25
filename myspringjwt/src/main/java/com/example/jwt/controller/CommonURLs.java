@@ -8,7 +8,7 @@ package com.example.jwt.controller;
  *
  */
 public class CommonURLs {
-	
+	/*Default Constructor*/
 	private CommonURLs() {
 		
 	}
