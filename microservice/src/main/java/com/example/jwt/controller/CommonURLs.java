@@ -4,7 +4,7 @@ package com.example.jwt.controller;
  * Copyright (c) 2018 NTT DATA Corporation
  *
  * @author 159719
- * 20 Aug 2018
+ * 25 June 2020
  *
  */
 public class CommonURLs {
