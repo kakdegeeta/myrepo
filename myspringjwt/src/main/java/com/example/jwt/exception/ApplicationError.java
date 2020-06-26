@@ -22,7 +22,7 @@ public class ApplicationError {
 	private LocalDateTime timestamp;
 	private String message;
 	private String debugMessage;
-
+	private String param1;
 
 
 
