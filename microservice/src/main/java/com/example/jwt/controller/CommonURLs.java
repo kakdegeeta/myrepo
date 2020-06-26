@@ -13,9 +13,7 @@ public class CommonURLs {
 		
 	}
 	public static final String ERROR_URL="/error";
-
 	public static final String MICROSERVICE_URL="/micro";
 	public static final String MASTER_URL="/master";
-
 
 }
