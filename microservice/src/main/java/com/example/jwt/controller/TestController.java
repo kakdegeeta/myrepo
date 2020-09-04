@@ -70,7 +70,6 @@ public class TestController{
 		{
 			mav.addObject("exception", exception);
 			mav.addObject("url", request.getRequestURL());
-			mav.addObject("timestamp", new Date().toString());
 			mav.setViewName("403");
 		}
 		
@@ -103,7 +102,7 @@ public class TestController{
 	 */
 	@Override
 	public String getErrorPath() {
-		// TODO Auto-generated method stub
+		
 		return "/error";
 	}
 
