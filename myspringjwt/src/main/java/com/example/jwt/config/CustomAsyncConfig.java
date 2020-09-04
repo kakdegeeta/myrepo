@@ -31,11 +31,9 @@ public class CustomAsyncConfig implements AsyncConfigurer{
 		Configure ThreadPoolTaskExecutor
 	**/
 		ThreadPoolTaskExecutor executor=new ThreadPoolTaskExecutor();
-		executor.setCorePoolSize(5);
         executor.setMaxPoolSize(10);
         executor.setQueueCapacity(25);
         executor.setWaitForTasksToCompleteOnShutdown(true);
-        executor.setThreadNamePrefix("EventNotificationService-Executor-");
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         executor.initialize();
 		return executor;
